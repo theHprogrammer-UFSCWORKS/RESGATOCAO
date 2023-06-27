@@ -1,0 +1,53 @@
+{% extends 'core/base.html' %} {% block title %} Login - Resgatocao {%endblock%}
+{% block content %}
+<section class="py-5">
+	<div class="container py-5">
+		<div class="row mb-4 mb-lg-5">
+			<div class="col-md-8 col-xl-6 text-center mx-auto">
+				<p class="fw-bold text-success mb-2">Canal do Adotante</p>
+				<h2 class="fw-bold">Bem-vindo de volta!</h2>
+			</div>
+		</div>
+		<div class="row d-flex justify-content-center">
+			<div class="col-md-6 col-xl-4">
+				<div class="card">
+					<div
+						class="card-body text-center d-flex flex-column align-items-center">
+						<form method="post">
+							{% csrf_token %}
+							<div class="mb-3">
+								<input
+									class="form-control"
+									type="email"
+									name="email"
+									placeholder="Email" />
+							</div>
+							<div class="mb-3">
+								<input
+									class="form-control"
+									type="password"
+									name="password"
+									placeholder="Password" />
+							</div>
+							<div class="mb-3">
+								<button
+									class="btn btn-primary shadow d-block w-100"
+									type="submit">
+									Entrar&nbsp;
+								</button>
+							</div>
+							<p class="text-muted">
+								Ainda não tem uma conta?
+								<a href="{% url 'account:signup' %}"
+									>Cadastre-se</a
+								>
+							</p>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+{% endblock %}

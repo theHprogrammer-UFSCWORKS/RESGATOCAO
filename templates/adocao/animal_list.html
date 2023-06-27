@@ -1,0 +1,66 @@
+{% extends 'core/base.html' %} {% block title %} Adocao - Resgatocao
+{%endblock%} {% block content %}
+
+<section class="py-5">
+	<div class="container py-5">
+		<section class="photo-gallery py-4 py-xl-5">
+			<div class="container">
+				<div class="row mb-5">
+					<div class="col-md-8 col-xl-6 text-center mx-auto">
+						<h2>Nossos Amiguinhos</h2>
+						<p class="w-lg-50">
+							Todos merecem um lar. Qual deles vai te fazer
+							companhia?
+						</p>
+					</div>
+				</div>
+				<div
+					class="row gx-2 gy-2 row-cols-1 row-cols-md-2 row-cols-xl-3 photos"
+					data-bss-baguettebox="">
+					{% for animal in animals %}
+					<div class="col item">
+						<a href="{{ animal.avatar.url }}"
+							><img
+								class="img-fluid"
+								src="{{ animal.avatar.url }}"
+						/></a>
+						<div class="caption">{{ animal.nome }}</div>
+					</div>
+					{% endfor %}
+				</div>
+			</div>
+		</section>
+		{% if is_paginated %}
+		<nav class="d-xl-flex justify-content-xl-center align-items-xl-center">
+			<ul class="pagination">
+				{% if page_obj.has_previous %}
+				<li class="page-item">
+					<a
+						class="page-link"
+						aria-label="Previous"
+						href="?page={{ page_obj.previous_page_number }}"
+						><span aria-hidden="true">«</span></a
+					>
+				</li>
+				{% endif %} {% for i in paginator.page_range %}
+				<li
+					class="page-item {% if page_obj.number == i %}active{% endif %}">
+					<a class="page-link" href="?page={{ i }}">{{ i }}</a>
+				</li>
+				{% endfor %} {% if page_obj.has_next %}
+				<li class="page-item">
+					<a
+						class="page-link"
+						aria-label="Next"
+						href="?page={{ page_obj.next_page_number }}"
+						><span aria-hidden="true">»</span></a
+					>
+				</li>
+				{% endif %}
+			</ul>
+		</nav>
+		{% endif %}
+	</div>
+</section>
+
+{% endblock %}

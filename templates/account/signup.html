@@ -1,0 +1,122 @@
+{% extends 'core/base.html' %} {% block title %} Cadastro - Resgatocao {%endblock%}
+
+{% block content %}
+<section class="py-5">
+	<div class="container py-5">
+		<div class="row mb-4 mb-lg-5">
+			<div class="col-md-8 col-xl-6 text-center mx-auto">
+				<p class="fw-bold text-success mb-2">Cadastro</p>
+				<h2 class="fw-bold">Bem-Vindo!</h2>
+			</div>
+		</div>
+		<div class="row d-flex justify-content-center">
+			<div class="col-md-8 col-xl-6">
+				<div class="card">
+					<div class="card-body">
+						<form method="post">
+							{% csrf_token %}
+							<div class="row">
+								<div class="col-md-6 mb-3">
+									<input
+										class="form-control"
+										type="text"
+										name="username"
+										placeholder="Nome de usuário"
+										required />
+								</div>
+								<div class="col-md-6 mb-3">
+									<input
+										class="form-control"
+										type="text"
+										name="first_name"
+										placeholder="Nome"
+										required />
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6 mb-3">
+									<input
+										class="form-control"
+										type="text"
+										name="last_name"
+										placeholder="Sobrenome"
+										required />
+								</div>
+								<div class="col-md-6 mb-3">
+									<input
+										class="form-control"
+										type="email"
+										name="email"
+										placeholder="Email"
+										required />
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6 mb-3">
+									<input
+										class="form-control"
+										type="date"
+										name="birth_date"
+										placeholder="Data de nascimento"
+										required />
+								</div>
+								<div class="col-md-6 mb-3">
+									<input
+										class="form-control"
+										type="text"
+										name="occupation"
+										placeholder="Ocupação"
+										required />
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6 mb-3">
+									<input
+										class="form-control"
+										type="text"
+										name="cpf"
+										placeholder="CPF"
+										required />
+								</div>
+								<div class="col-md-6 mb-3">
+									<input
+										class="form-control"
+										type="text"
+										name="phone"
+										placeholder="Telefone"
+										required />
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6 mb-3">
+									<input
+										class="form-control"
+										type="password"
+										name="password1"
+										placeholder="Senha"
+										required />
+								</div>
+								<div class="col-md-6 mb-3">
+									<input
+										class="form-control"
+										type="password"
+										name="password2"
+										placeholder="Confirme a senha"
+										required />
+								</div>
+							</div>
+							<div class="mb-3">
+								<button
+									class="btn btn-primary shadow d-block mx-auto"
+									type="submit">
+									Cadastrar
+								</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+{% endblock %}
