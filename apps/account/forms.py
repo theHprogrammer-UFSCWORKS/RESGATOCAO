@@ -6,9 +6,7 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 class EmailAuthenticationForm(AuthenticationForm):
     username = forms.EmailField()
 
-
 User = get_user_model()
-
 
 class CustomUserCreationForm(UserCreationForm):
     email = forms.EmailField(required=True)
@@ -34,3 +32,4 @@ class CustomUserCreationForm(UserCreationForm):
         if commit:
             user.save()
         return user
+

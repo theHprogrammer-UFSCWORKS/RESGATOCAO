@@ -27,7 +27,10 @@ class Endereco(models.Model):
     is_principal = models.BooleanField('Principal', default=False)
 
     def __str__(self):
-        return f'{self.logradouro}, {self.numero}, {self.cidade} - {self.uf}'
+        #return f'{self.numero}, {self.cidade} - {self.uf}'
+        #returning every information 
+        return f'{self.cep}, {self.uf}, {self.bairro}, {self.endereco}, {self.cidade}, {self.numero}, {self.complemento}, {self.is_principal}'
+
 
 
 class UserManager(BaseUserManager):

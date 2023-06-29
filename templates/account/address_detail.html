@@ -1,0 +1,28 @@
+{% extends 'core/base.html' %}
+
+{% block title %} Address Detail - Resgatocao {% endblock %}
+
+{% block content %}
+  <h1>Address Detail</h1>
+  <div class="address-details">
+    {% if is_edit %}
+      <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Update</button>
+      </form>
+    {% else %}
+      <p><strong>CEP:</strong> {{ endereco.cep }}</p>
+      <p><strong>UF:</strong> {{ endereco.uf }}</p>
+      <p><strong>Bairro:</strong> {{ endereco.bairro }}</p>
+      <p><strong>Endereço:</strong> {{ endereco.endereco }}</p>
+      <p><strong>Cidade:</strong> {{ endereco.cidade }}</p>
+      <p><strong>Número:</strong> {{ endereco.numero }}</p>
+      <p><strong>Complemento:</strong> {{ endereco.complemento }}</p>
+      {% if endereco.is_principal %}
+        <p class="principal">Principal Address</p>
+      {% endif %}
+      <a href="{% url 'account:address_detail' pk=endereco.pk %}?edit=true">Edit</a>
+    {% endif %}
+  </div>
+{% endblock %}

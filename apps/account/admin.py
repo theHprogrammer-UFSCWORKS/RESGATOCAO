@@ -8,7 +8,6 @@ class EnderecoInline(admin.TabularInline):
     model = User.addresses.through
     extra = 1
 
-
 class UserAdmin(BaseUserAdmin):
     # The fields to be used in displaying the User model.
     # These override the definitions on the base UserAdmin

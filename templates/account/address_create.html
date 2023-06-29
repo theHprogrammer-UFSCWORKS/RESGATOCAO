@@ -1,0 +1,39 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Create New Address - Resgatocao{% endblock %}
+
+{% block content %}
+  <h1>Create New Address</h1>
+  <form method="POST">
+    {% csrf_token %}
+    <div>
+      <label for="cep">CEP:</label>
+      <input type="text" id="cep" name="cep" required>
+    </div>
+    <div>
+      <label for="uf">UF:</label>
+      <input type="text" id="uf" name="uf" required>
+    </div>
+    <div>
+      <label for="bairro">Bairro:</label>
+      <input type="text" id="bairro" name="bairro" required>
+    </div>
+    <div>
+      <label for="endereco">Endereço:</label>
+      <input type="text" id="endereco" name="endereco" required>
+    </div>
+    <div>
+      <label for="cidade">Cidade:</label>
+      <input type="text" id="cidade" name="cidade" required>
+    </div>
+    <div>
+      <label for="numero">Número:</label>
+      <input type="number" id="numero" name="numero" required>
+    </div>
+    <div>
+      <label for="complemento">Complemento:</label>
+      <input type="text" id="complemento" name="complemento">
+    </div>
+    <button type="submit">Create Address</button>
+  </form>
+{% endblock %}
