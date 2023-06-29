@@ -33,3 +33,14 @@ class CustomUserCreationForm(UserCreationForm):
             user.save()
         return user
 
+class CustomUserUpdateForm(forms.ModelForm):
+    password = forms.CharField(widget=forms.HiddenInput(), required=False)
+
+    class Meta:
+        model = User
+        fields = ["username", "first_name", "last_name", "email", "birth_date", "occupation", "cpf", "phone"]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["birth_date"].disabled = True
+        self.fields["cpf"].disabled = True

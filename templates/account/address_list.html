@@ -33,9 +33,25 @@
       cursor: pointer;
     }
 
-    .add-button {
+    .delete-button {
       margin-top: 10px;
       display: inline-block;
+      padding: 5px 10px;
+      background-color: #f44336;
+      color: white;
+      border: none;
+      border-radius: 3px;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .create-button-container {
+      margin-top: 10px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .create-button {
       padding: 5px 10px;
       background-color: #2196F3;
       color: white;
@@ -44,9 +60,16 @@
       text-decoration: none;
       cursor: pointer;
     }
+
+    .truncate-text {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 200px; /* adjust the width as needed */
+    }
   </style>
 
-  <h1>Addresses for {{ request.user.get_full_name }}</h1>
+  <h1>Endereços de {{ request.user.get_full_name }}</h1>
   <div class="endereco-container">
     {% for endereco in endereco_list %}
       <div class="endereco-box{% if endereco.is_principal %} principal{% endif %}">
@@ -56,13 +79,18 @@
         <strong>Endereço:</strong> {{ endereco.endereco }}<br>
         <strong>Cidade:</strong> {{ endereco.cidade }}<br>
         <strong>Número:</strong> {{ endereco.numero }}<br>
-        <strong>Complemento:</strong> {{ endereco.complemento }}<br>
-        <a class="edit-button" href="{% url 'account:address_detail' pk=endereco.pk%}">Edit</a>
+        <strong>Complemento:</strong> <span class="truncate-text">{{ endereco.complemento }}</span><br>
+        <a class="edit-button" href="{% url 'account:address_detail' pk=endereco.pk %}">Edit</a>
+        {% if not endereco.is_principal %}
+          <a class="delete-button" href="{% url 'account:address_delete' pk=endereco.pk %}">Delete</a>
+        {% endif %}
       </div>
     {% empty %}
       <p>No addresses found.</p>
     {% endfor %}
   </div>
 
-  <a class="add-button" href="{% url 'account:address_create' %}">Add New Address</a>
+  <div class="create-button-container">
+    <a class="create-button" href="{% url 'account:address_create' %}">Add New Address</a>
+  </div>
 {% endblock %}

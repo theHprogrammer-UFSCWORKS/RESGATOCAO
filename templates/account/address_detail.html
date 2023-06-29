@@ -1,28 +1,93 @@
 {% extends 'core/base.html' %}
 
-{% block title %} Address Detail - Resgatocao {% endblock %}
+{% block title %}Address Detail - Resgatocao{% endblock %}
 
 {% block content %}
-  <h1>Address Detail</h1>
-  <div class="address-details">
-    {% if is_edit %}
-      <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Update</button>
-      </form>
-    {% else %}
-      <p><strong>CEP:</strong> {{ endereco.cep }}</p>
-      <p><strong>UF:</strong> {{ endereco.uf }}</p>
-      <p><strong>Bairro:</strong> {{ endereco.bairro }}</p>
-      <p><strong>Endereço:</strong> {{ endereco.endereco }}</p>
-      <p><strong>Cidade:</strong> {{ endereco.cidade }}</p>
-      <p><strong>Número:</strong> {{ endereco.numero }}</p>
-      <p><strong>Complemento:</strong> {{ endereco.complemento }}</p>
-      {% if endereco.is_principal %}
-        <p class="principal">Principal Address</p>
-      {% endif %}
-      <a href="{% url 'account:address_detail' pk=endereco.pk %}?edit=true">Edit</a>
-    {% endif %}
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="address-details">
+          <h1 class="text-center">Detalhes do endereço</h1>
+          {% if is_edit %}
+            <form class="address-form" method="POST" enctype="multipart/form-data">
+              {% csrf_token %}
+              <div class="form-group">
+                <label for="cep">CEP:</label>
+                <br>
+                {{ form.cep }}
+              </div>
+              <div class="form-group">
+                <label for="uf">UF:</label>
+                <br>
+                {{ form.uf }}
+              </div>
+              <div class="form-group">
+                <label for="bairro">Bairro:</label>
+                <br>
+                {{ form.bairro }}
+              </div>
+              <div class="form-group">
+                <label for="endereco">Endereço:</label>
+                <br>
+                {{ form.endereco }}
+              </div>
+              <div class="form-group">
+                <label for="cidade">Cidade:</label>
+                <br>
+                {{ form.cidade }}
+              </div>
+              <div class="form-group">
+                <label for="numero">Número:</label>
+                <br>
+                {{ form.numero }}
+              </div>
+              <div class="form-group">
+                <label for="complemento">Complemento:</label>
+                <br>
+                {{ form.complemento }}
+              </div>
+              <div class="text-center mt-3">
+                <button class="btn btn-primary" type="submit">Update</button>
+              </div>
+            </form>
+          {% else %}
+            <div class="form-group">
+              <label for="cep">CEP:</label>
+              <p>{{ endereco.cep }}</p>
+            </div>
+            <div class="form-group">
+              <label for="uf">UF:</label>
+              <p>{{ endereco.uf }}</p>
+            </div>
+            <div class="form-group">
+              <label for="bairro">Bairro:</label>
+              <p>{{ endereco.bairro }}</p>
+            </div>
+            <div class="form-group">
+              <label for="endereco">Endereço:</label>
+              <p>{{ endereco.endereco }}</p>
+            </div>
+            <div class="form-group">
+              <label for="cidade">Cidade:</label>
+              <p>{{ endereco.cidade }}</p>
+            </div>
+            <div class="form-group">
+              <label for="numero">Número:</label>
+              <p>{{ endereco.numero }}</p>
+            </div>
+            <div class="form-group">
+              <label for="complemento">Complemento:</label>
+              <p>{{ endereco.complemento }}</p>
+            </div>
+            {% if endereco.is_principal %}
+              <p class="principal">Principal Address</p>
+            {% endif %}
+            <div class="text-center mt-3">
+              <a class="btn btn-primary" href="{% url 'account:address_detail' pk=endereco.pk %}?edit=true">Edit</a>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
   </div>
 {% endblock %}

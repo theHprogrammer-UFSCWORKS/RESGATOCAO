@@ -125,7 +125,7 @@
 						  {{ user.first_name }}
 						</a>
 						<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-						  <li><a class="dropdown-item" href="#">Informações</a></li>
+						  <li><a class="dropdown-item" href="{% url 'account:user_detail'%}">Informações</a></li>
 						  <li><a class="dropdown-item" href="{% url 'account:address_list'%}">Endereços</a></li>
 						  <li><a class="dropdown-item" href="#">Adoção</a></li>
 						  <li><a class="dropdown-item" id="logout_button" href="{% url 'account:logout' %}">Log Out</a></li>
