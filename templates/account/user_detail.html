@@ -5,11 +5,12 @@
 {% block content %}
   <style>
     .user-details {
-      margin: 20px;
+      margin: 20px auto;
       padding: 20px;
       border: 1px solid #ccc;
       border-radius: 5px;
       background-color: #f5f5f5;
+      text-align: center;
     }
 
     .user-details p {
@@ -25,15 +26,17 @@
       height: 150px;
       border-radius: 50%;
       object-fit: cover;
+      display: block;
+      margin: 0 auto 10px;
     }
 
-    .update-button {
+    .update-buttons {
       display: flex;
       justify-content: center;
       margin-top: 20px;
     }
 
-    .update-button a {
+    .update-buttons a {
       display: inline-block;
       background-color: #4CAF50;
       color: white;
@@ -42,15 +45,21 @@
       border-radius: 4px;
       cursor: pointer;
       text-decoration: none;
+      margin-right: 10px;
     }
 
-    .update-button a:hover {
+    .update-buttons a:hover {
       background-color: #45a049;
     }
   </style>
 
-  <h1>Informações do Usuário</h1>
+  <h1 class="text-center">Informações do Usuário</h1>
   <div class="user-details">
+    {% if user.avatar %}
+      <img class="avatar" src="{{ user.avatar.url }}" alt="Avatar">
+    {% else %}
+      <p><strong>Avatar:</strong> Usuário sem Avatar</p>
+    {% endif %}
     <p><strong>Nome de Usuário:</strong> {{ user.username }}</p>
     <p><strong>Nome Completo:</strong> {{ user.get_full_name }}</p>
     <p><strong>Email:</strong> {{ user.email }}</p>
@@ -58,15 +67,11 @@
     <p><strong>Ocupação:</strong> {{ user.occupation }}</p>
     <p><strong>CPF:</strong> {{ user.cpf }}</p>
     <p><strong>Telefone:</strong> {{ user.phone }}</p>
-    {% if user.avatar %}
-      <img class="avatar" src="{{ user.avatar.url }}" alt="Avatar">
-    {% else %}
-      <p><strong>Avatar:</strong> Usuário sem Avatar</p>
-    {% endif %}
     <!-- Add more user information fields if needed -->
   </div>
 
-  <div class="update-button">
-    <a href="{% url 'account:user_update' %}">Atualizar Informações</a>
+  <div class="update-buttons">
+    <a href="{% url 'account:user_update' %}">Atualizar Informações Gerais</a>
+    <a href="{% url 'account:email_password_update' %}">Atualizar Informações de Login</a>
   </div>
 {% endblock %}

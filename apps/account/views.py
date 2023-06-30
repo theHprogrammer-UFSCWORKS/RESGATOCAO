@@ -10,7 +10,7 @@ from django.forms.models import model_to_dict
 from django.contrib.auth.mixins import LoginRequiredMixin #usado para verificar se está logado quando usando
 #classes como views
 
-from apps.account.forms import CustomUserCreationForm, EmailAuthenticationForm,CustomUserUpdateForm
+from apps.account.forms import CustomUserCreationForm, EmailAuthenticationForm,CustomUserUpdateForm,AvatarUploadForm,EmailPasswordUpdateForm
 
 from .models import User, Endereco
 
@@ -109,71 +109,58 @@ class UserDetailView(LoginRequiredMixin, DetailView):
     def get_object(self):
         return self.request.user
 
-'''class UserUpdateView(LoginRequiredMixin, UpdateView):
-    model = User
-    form_class = CustomUserCreationForm
-    template_name = 'account/user_update.html'
-    success_url = reverse_lazy('account:user_detail')
-
-    def get_object(self):
-        return self.request.user
-    
-    def get_success_url(self):
-        return reverse_lazy('account:user_detail')
-
-    def form_valid(self, form):
-        user = form.save(commit=False)
-        user.save()
-        #return redirect(self.get_success_url())
-        return HttpResponseRedirect(self.get_success_url())'''
-
-'''class UserUpdateView(LoginRequiredMixin, UpdateView):
-    model = User
-    form_class = CustomUserCreationForm
-    template_name = 'account/user_update.html'
-    success_url = reverse_lazy('account:user_detail')
-
-    def get_object(self):
-        return self.request.user
-
-    def get_initial(self):
-        initial = super().get_initial()
-        user = self.get_object()
-        initial['cpf'] = user.cpf
-        initial['birth_date'] = user.birth_date
-        return initial
-
-    def form_valid(self, form):
-        user = form.save(commit=False)
-        user.save()
-        return redirect(self.get_success_url())'''
-
 class UserUpdateView(LoginRequiredMixin, UpdateView):
     model = User
     form_class = CustomUserUpdateForm
     template_name = 'account/user_update.html'
     success_url = reverse_lazy('account:user_detail')
 
-    def get_object(self):
+    def get_object(self, queryset=None):
         return self.request.user
 
-    def form_valid(self, form):
-        form.save()
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['avatar_form'] = AvatarUploadForm(instance=self.request.user)
+        return context
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()  # Set the 'object' attribute
+        form = self.get_form()
+        avatar_form = AvatarUploadForm(request.POST, request.FILES, instance=request.user)
+
+        if form.is_valid() and avatar_form.is_valid():
+            return self.form_valid(form, avatar_form)
+        else:
+            return self.form_invalid(form, avatar_form)
+
+    def form_valid(self, form, avatar_form):
+        avatar_form.save()  # Save the avatar form
         return super().form_valid(form)
 
-from django.contrib.auth.forms import PasswordChangeForm
-from django.contrib.auth.views import PasswordChangeView
+    def form_invalid(self, form, avatar_form):
+        return self.render_to_response(self.get_context_data(form=form, avatar_form=avatar_form))
 
-class UserPasswordChangeView(LoginRequiredMixin, PasswordChangeView):
-    template_name = 'account/password_change.html'
+from django.views.generic import FormView
+
+from django.contrib.auth import update_session_auth_hash 
+
+class EmailPasswordUpdateView(FormView):
+    form_class = EmailPasswordUpdateForm
+    template_name = 'account/email_password_update.html'
     success_url = reverse_lazy('account:user_detail')
-    form_class = PasswordChangeForm
-
-    def get_form_kwargs(self):
-        kwargs = super().get_form_kwargs()
-        kwargs['user'] = self.request.user
-        return kwargs
 
     def form_valid(self, form):
-        form.save()
+        user = self.request.user
+        email = form.cleaned_data.get('email')
+        password = form.cleaned_data.get('password')
+
+        if email:
+            user.email = email
+            user.save()
+
+        if password:
+            user.set_password(password)
+            user.save()
+            update_session_auth_hash(self.request, user)
+
         return super().form_valid(form)

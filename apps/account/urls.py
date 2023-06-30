@@ -16,5 +16,6 @@ urlpatterns = [
 
     path('detail/', views.UserDetailView.as_view(), name='user_detail'),
     path('detail/update', views.UserUpdateView.as_view(), name='user_update'),
+    path('detail/email_password_update/', views.EmailPasswordUpdateView.as_view(), name='email_password_update')
 
 ] 

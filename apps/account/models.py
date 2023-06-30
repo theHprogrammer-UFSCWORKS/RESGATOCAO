@@ -12,8 +12,8 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 
-def upload_to_adotante_photos(instance, filename):
-    return 'adotante_photos/{0}/{1}'.format(instance.adotante.user.username, filename)
+def upload_to_user_photos(instance, filename):
+    return 'user_photos/{0}/{1}'.format(instance.username, filename)
 
 
 class Endereco(models.Model):
@@ -78,7 +78,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     phone = models.CharField('Telefone', max_length=13,
                              null=True, blank=True)  # '11 99999-9999
     avatar = models.ImageField(
-        'Avatar', upload_to=upload_to_adotante_photos, null=True, blank=True)
+        'Avatar', upload_to=upload_to_user_photos, null=True, blank=True)
     addresses = models.ManyToManyField(
         Endereco, verbose_name='Endereços', blank=True)
 
