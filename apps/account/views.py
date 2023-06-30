@@ -164,3 +164,41 @@ class EmailPasswordUpdateView(FormView):
             update_session_auth_hash(self.request, user)
 
         return super().form_valid(form)
+
+
+class AddressSetMainView(LoginRequiredMixin, UpdateView):
+    model = Endereco
+    fields = ['is_principal']
+    template_name = 'account/address_set_main.html'
+    success_url = reverse_lazy('account:address_list')
+
+    def form_valid(self, form):
+        endereco = form.save(commit=False)
+        endereco.is_principal = True
+        endereco.save()
+
+        # Set the other addresses as non-principal
+        Endereco.objects.filter(user=self.request.user).exclude(pk=endereco.pk).update(is_principal=False)
+
+        return super().form_valid(form)
+    
+from django.views.generic import View
+
+class AddressSetMainView(LoginRequiredMixin, View):
+    def get(self, request, pk):
+        endereco = Endereco.objects.get(pk=pk)
+        return render(request, 'account/address_set_main_confirm.html', {'endereco': endereco})
+
+class AddressSetMainConfirmView(LoginRequiredMixin, DetailView):
+    model = Endereco
+    template_name = 'account/address_set_main_confirm.html'
+
+    def post(self, request, pk):
+        endereco = self.get_object()
+        endereco.is_principal = True
+        endereco.save()
+
+        # Set the other addresses as non-principal
+        Endereco.objects.filter(user=request.user).exclude(pk=pk).update(is_principal=False)
+
+        return redirect('account:address_list')

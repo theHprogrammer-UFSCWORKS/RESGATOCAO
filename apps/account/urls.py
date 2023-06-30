@@ -14,6 +14,9 @@ urlpatterns = [
     path('enderecos/create/', views.AddressCreateView.as_view(), name='address_create'),
     path('enderecos/<int:pk>/delete/', views.AddressDeleteView.as_view(), name='address_delete'),
 
+    path('enderecos/<int:pk>/set_main/', views.AddressSetMainView.as_view(), name='address_set_main'),
+    path('enderecos/<int:pk>/set_main/confirm/', views.AddressSetMainConfirmView.as_view(), name='address_set_main_confirm'),
+
     path('detail/', views.UserDetailView.as_view(), name='user_detail'),
     path('detail/update', views.UserUpdateView.as_view(), name='user_update'),
     path('detail/email_password_update/', views.EmailPasswordUpdateView.as_view(), name='email_password_update')

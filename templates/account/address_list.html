@@ -60,6 +60,18 @@
       text-decoration: none;
       cursor: pointer;
     }
+
+    .set-main-button {
+      margin-top: 10px;
+      display: inline-block;
+      padding: 5px 10px;
+      background-color: #FF9800;
+      color: white;
+      border: none;
+      border-radius: 3px;
+      text-decoration: none;
+      cursor: pointer;
+    }
   </style>
 
   <h1 class="text-center">Endereços de {{ request.user.get_full_name }}</h1>
@@ -76,6 +88,9 @@
         <a class="edit-button" href="{% url 'account:address_detail' pk=endereco.pk %}">Editar</a>
         {% if not endereco.is_principal %}
           <a class="delete-button" href="{% url 'account:address_delete' pk=endereco.pk %}">Excluir</a>
+        {% endif %}
+        {% if not endereco.is_principal %}
+          <a class="set-main-button" href="{% url 'account:address_set_main' pk=endereco.pk %}">Definir como Principal</a>
         {% endif %}
       </div>
     {% empty %}
