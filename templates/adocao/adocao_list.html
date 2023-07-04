@@ -1,0 +1,17 @@
+<!-- adocao/adocao_list.html -->
+{% extends 'core/base.html' %}
+
+{% block content %}
+<h2>Adoções</h2>
+<ul>
+{% for adocao in adocoes %}
+    <li>
+        <a href="{% url 'adocao:adocao_detail' adocao.id %}">
+            {{ adocao.animal.nome }} - {{ adocao.adotante.first_name }} {{ adocao.adotante.last_name }}
+        </a>
+    </li>
+{% empty %}
+    <li>Nenhuma adoção encontrada.</li>
+{% endfor %}
+</ul>
+{% endblock %}

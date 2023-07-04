@@ -1,3 +1,6 @@
+from django.utils import timezone
+from datetime import timezone
+
 from django.db import models
 
 from apps.account.models import Endereco, User
@@ -95,20 +98,24 @@ class AnimalResgate(models.Model):
 
 
 class AdocaoSteps(models.TextChoices):
-    entrevista = ('entrevista', 'Entrevista')
+    REQUISICAO_REALIZADA = ('requisicao_realizada', 'Requisição Realizada')
+    ENTREVISTA_PRESNECIAL = ('entrevista_presencial', 'Entrevista Presencial')
+    FINALIZADO_ADOCAO_REALIZADA = (
+        'finalizado_adocao_realizada', 'Finalizado - Adoção Realizada')
+    FINALIZADO_ADOCAO_REJEITADA = (
+        'finalizado_adocao_rejeitada', 'Finalizado - Adoção Rejeitada')
 
 
 class Adocao(models.Model):
-    data_adocao = models.DateTimeField('Data da adoção', auto_now_add=True)
     data_inicio = models.DateTimeField(
-        'Data do início da adoção', null=True, blank=True)
+        'Data do início da adoção', auto_now_add=True)
+    data_adocao = models.DateTimeField(
+        'Data de Conclusão', null=True, blank=True)
     animal = models.ForeignKey(Animal, on_delete=models.CASCADE)
     adotante = models.ForeignKey(User, on_delete=models.CASCADE)
-    etapa = models.CharField('Etapa da adoção',
-                             max_length=20, choices=AdocaoSteps.choices, default=AdocaoSteps.entrevista)
+    etapa = models.CharField('Etapa da adoção', max_length=50,
+                             choices=AdocaoSteps.choices, default=AdocaoSteps.REQUISICAO_REALIZADA)
+    observacoes = models.TextField('Observações', blank=True)
 
     def __str__(self):
-        return self.animal.nome + ' - ' + self.adotante.user.first_name + ' ' + self.adotante.user.last_name
-
-    class Meta:
-        unique_together = ('animal', 'adotante')
+        return self.animal.nome + ' - ' + self.adotante.first_name + ' ' + self.adotante.last_name
