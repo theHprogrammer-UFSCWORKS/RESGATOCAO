@@ -1,0 +1,95 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Atualizar Informações - Resgatocao{% endblock %}
+
+{% block content %}
+  <style>
+    .user-update-form {
+      margin: 20px;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: #f5f5f5;
+    }
+
+    .user-update-form p {
+      margin: 10px 0;
+    }
+
+    .user-update-form strong {
+      font-weight: bold;
+    }
+
+    .user-update-form input[type="text"],
+    .user-update-form input[type="email"],
+    .user-update-form select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+      margin-top: 5px;
+      margin-bottom: 10px;
+    }
+
+    .avatar-upload {
+      margin-top: 20px;
+    }
+
+    .avatar-upload input[type="file"] {
+      display: none;
+    }
+
+    .avatar-upload label {
+      display: inline-block;
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .avatar-upload label:hover {
+      background-color: #45a049;
+    }
+
+    .update-button {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .update-button button {
+      display: inline-block;
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .update-button button:hover {
+      background-color: #45a049;
+    }
+  </style>
+
+  <div class="user-update-form">
+    <h2>Atualizar Informações do Usuário</h2>
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      {% for field in form %}
+        {% if field.name != 'password' %}
+          <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+          {{ field }}
+        {% endif %}
+      {% endfor %}
+      {{ avatar_form.as_p }}  <!-- Render the avatar form -->
+      <div class="update-button">
+        <button type="submit">Atualizar</button>
+      </div>
+    </form>
+  </div>
+{% endblock %}

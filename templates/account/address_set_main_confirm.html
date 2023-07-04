@@ -1,0 +1,80 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Confirmar Definição de Endereço Principal - Resgatocao{% endblock %}
+
+{% block content %}
+<style>
+  .confirmation-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 50px;
+  }
+
+  .confirmation-message {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+
+  .address-details {
+    text-align: left;
+    padding: 20px;
+    background-color: #f2f2f2;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .address-details strong {
+    width: 120px;
+    display: inline-block;
+    font-weight: bold;
+  }
+
+  .confirmation-buttons {
+    display: flex;
+    justify-content: center;
+  }
+
+  .confirm-button,
+  .cancel-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .confirm-button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    margin-right: 10px;
+  }
+
+  .cancel-button {
+    background-color: #f44336;
+    color: white;
+    border: none;
+  }
+</style>
+
+<div class="confirmation-container">
+  <h1 class="confirmation-message">Deseja definir este endereço como principal?</h1>
+  <div class="address-details">
+    <strong>CEP:</strong> {{ endereco.cep }}<br>
+    <strong>UF:</strong> {{ endereco.uf }}<br>
+    <strong>Bairro:</strong> {{ endereco.bairro }}<br>
+    <strong>Endereço:</strong> {{ endereco.endereco }}<br>
+    <strong>Cidade:</strong> {{ endereco.cidade }}<br>
+    <strong>Número:</strong> {{ endereco.numero }}<br>
+    <strong>Complemento:</strong> {{ endereco.complemento }}<br>
+  </div>
+  <div class="confirmation-buttons">
+    <form method="post" action="{% url 'account:address_set_main_confirm' pk=endereco.pk %}">
+      {% csrf_token %}
+      <button type="submit" class="confirm-button">Confirmar</button>
+    </form>
+    <a class="cancel-button" href="{% url 'account:address_list' %}">Cancelar</a>
+  </div>
+</div>
+{% endblock %}

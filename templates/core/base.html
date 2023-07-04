@@ -39,6 +39,23 @@
 			type="text/css"
 			rel="stylesheet"
 			href="{% static 'core/assets/css/style404.css' %}" />
+			<style>
+				.dropdown-menu {
+				  min-width: 100px;
+				}
+				
+				.dropdown-item {
+				  padding: 0.5rem 1rem;
+				}
+				
+				.dropdown-item:hover {
+				  background-color: #f8f9fa;
+				}
+				#logout_button {
+   				 color: red; /* Change the color to your desired value */
+  				}
+
+			  </style>
 	</head>
 
 	<body>
@@ -96,25 +113,24 @@
 						<li class="nav-item"></li>
 					</ul>
 					{% if user.is_authenticated %}
-					<a
-						class="btn btn-primary shadow d-xl-flex ms-auto justify-content-xl-center align-items-xl-center"
-						data-bss-hover-animate="pulse"
-						href="{% url 'core:index' %}">
-						{% if user.avatar %}
-						<img
-							src="{{ user.avatar.url }}"
-							alt="Avatar"
-							class="rounded-circle"
-							width="30"
-							height="30" />
-						{% else %}
-						<div
-							class="rounded-circle bg-primary text-white d-flex justify-content-center align-items-center"
-							style="width: 30px; height: 30px">
-							{{ user.first_name|first }}
-						</div>
-						{% endif %} {{ user.first_name }}
-					</a>
+					<div class="dropdown">
+						<a class="btn btn-primary shadow d-xl-flex ms-auto justify-content-xl-center align-items-xl-center" data-bs-toggle="dropdown" href="{% url 'core:index' %}">
+						  {% if user.avatar %}
+							<img src="{{ user.avatar.url }}" alt="Avatar" class="rounded-circle" width="30" height="30" />
+						  {% else %}
+							<div class="rounded-circle bg-primary text-white d-flex justify-content-center align-items-center" style="width: 30px; height: 30px">
+							  {{ user.first_name|first }}
+							</div>
+						  {% endif %}
+						  {{ user.first_name }}
+						</a>
+						<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+						  <li><a class="dropdown-item" href="{% url 'account:user_detail'%}">Informações</a></li>
+						  <li><a class="dropdown-item" href="{% url 'account:address_list'%}">Endereços</a></li>
+						  <li><a class="dropdown-item" href="#">Adoção</a></li>
+						  <li><a class="dropdown-item" id="logout_button" href="{% url 'account:logout' %}">Log Out</a></li>
+						</ul>
+					  </div>					  
 					{% else %}
 					<a
 						class="btn btn-primary shadow d-xl-flex ms-auto justify-content-xl-center align-items-xl-center"

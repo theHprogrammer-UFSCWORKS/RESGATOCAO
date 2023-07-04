@@ -10,8 +10,6 @@ def upload_to_animal_avatar(instance, filename):
 def upload_to_animal_photos(instance, filename):
     return 'animal_photos/{0}/{1}'.format(instance.animal.nome, filename)
 
-
-
 class TipoAnimal(models.Model):
     descricao = models.CharField('Descrição', max_length=30)
 

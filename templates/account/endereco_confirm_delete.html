@@ -1,0 +1,58 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Confirm Delete - Resgatocao{% endblock %}
+
+{% block content %}
+  <style>
+    .delete-container {
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .delete-container h1 {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    .delete-container p {
+      margin-bottom: 20px;
+    }
+
+    .delete-container form {
+      display: inline-block;
+    }
+
+    .delete-container form button,
+    .delete-container form a {
+      padding: 10px 20px;
+      background-color: #f44336;
+      color: white;
+      border: none;
+      border-radius: 3px;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .delete-container form button {
+      margin-right: 10px;
+    }
+
+    .delete-container form a {
+      background-color: #ccc;
+    }
+  </style>
+
+  <div class="delete-container">
+    <h1>Confirmar Deleção</h1>
+    <p>Você tem certeza que deseja deletar este endereço?</p>
+    <form method="post">
+      {% csrf_token %}
+      <button type="submit">Deletar</button>
+      <a href="{% url 'account:address_list' %}">Cancelar</a>
+    </form>
+  </div>
+{% endblock %}

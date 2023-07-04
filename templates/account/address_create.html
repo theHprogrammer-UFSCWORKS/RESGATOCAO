@@ -1,0 +1,50 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Cadastro de Endereço - Resgatocao{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="address-form-box">
+          <h1 class="text-center">Criar novo endereço</h1>
+          <form class="address-form" method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+              <label for="cep">CEP:</label>
+              <input class="form-control border-dark" type="text" id="cep" name="cep" required>
+            </div>
+            <div class="form-group">
+              <label for="uf">UF:</label>
+              <input class="form-control border-dark" type="text" id="uf" name="uf" maxlength="2" required>
+            </div>
+            <div class="form-group">
+              <label for="bairro">Bairro:</label>
+              <input class="form-control border-dark" type="text" id="bairro" name="bairro" required>
+            </div>
+            <div class="form-group">
+              <label for="endereco">Endereço:</label>
+              <input class="form-control border-dark" type="text" id="endereco" name="endereco" required>
+            </div>
+            <div class="form-group">
+              <label for="cidade">Cidade:</label>
+              <input class="form-control border-dark" type="text" id="cidade" name="cidade" required>
+            </div>
+            <div class="form-group">
+              <label for="numero">Número:</label>
+              <input class="form-control border-dark" type="number" id="numero" name="numero" required>
+            </div>
+            <div class="form-group">
+              <label for="complemento">Complemento:</label>
+              <input class="form-control border-dark" type="text" id="complemento" name="complemento">
+            </div>
+            <div class="form-group mt-3 text-center">
+              <button class="btn btn-primary" type="submit">Criar Endereço</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+

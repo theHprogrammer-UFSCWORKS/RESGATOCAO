@@ -48,7 +48,7 @@ class Migration(migrations.Migration):
                 ('occupation', models.CharField(blank=True, max_length=150, null=True, verbose_name='Ocupação')),
                 ('cpf', models.CharField(blank=True, max_length=11, null=True, verbose_name='CPF')),
                 ('phone', models.CharField(blank=True, max_length=13, null=True, verbose_name='Telefone')),
-                ('avatar', models.ImageField(blank=True, null=True, upload_to=apps.account.models.upload_to_adotante_photos, verbose_name='Avatar')),
+                ('avatar', models.ImageField(blank=True, null=True, upload_to=apps.account.models.upload_to_user_photos, verbose_name='Avatar')),
                 ('addresses', models.ManyToManyField(blank=True, to='account.endereco', verbose_name='Endereços')),
                 ('groups', models.ManyToManyField(blank=True, help_text='The groups this user belongs to. A user will get all permissions granted to each of their groups.', related_name='user_set', related_query_name='user', to='auth.group', verbose_name='groups')),
                 ('user_permissions', models.ManyToManyField(blank=True, help_text='Specific permissions for this user.', related_name='user_set', related_query_name='user', to='auth.permission', verbose_name='user permissions')),
