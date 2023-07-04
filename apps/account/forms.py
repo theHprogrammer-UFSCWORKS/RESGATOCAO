@@ -1,12 +1,15 @@
 from django import forms
 from django.contrib.auth import get_user_model
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.forms import (AuthenticationForm, PasswordChangeForm,
+                                       UserChangeForm, UserCreationForm)
 
 
 class EmailAuthenticationForm(AuthenticationForm):
     username = forms.EmailField()
 
+
 User = get_user_model()
+
 
 class CustomUserCreationForm(UserCreationForm):
     email = forms.EmailField(required=True)
@@ -33,31 +36,34 @@ class CustomUserCreationForm(UserCreationForm):
             user.save()
         return user
 
+
 class CustomUserUpdateForm(forms.ModelForm):
     password = forms.CharField(widget=forms.HiddenInput(), required=False)
 
     class Meta:
         model = User
-        #fields = ["username", "first_name", "last_name", "email", "birth_date", "occupation", "cpf", "phone"]
-        fields = ["username", "first_name", "last_name", "birth_date", "occupation", "cpf", "phone"]
+        # fields = ["username", "first_name", "last_name", "email", "birth_date", "occupation", "cpf", "phone"]
+        fields = ["username", "first_name", "last_name",
+                  "birth_date", "occupation", "cpf", "phone"]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["birth_date"].disabled = True
         self.fields["cpf"].disabled = True
 
+
 class AvatarUploadForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['avatar']
 
-from django.contrib.auth.forms import PasswordChangeForm,UserChangeForm
-
 
 class EmailPasswordUpdateForm(forms.Form):
     email = forms.EmailField(label='Novo Email', required=False)
-    password = forms.CharField(label='Nova Senha', widget=forms.PasswordInput, required=False)
-    password_confirmation = forms.CharField(label='Confirmar Nova Senha', widget=forms.PasswordInput, required=False)
+    password = forms.CharField(
+        label='Nova Senha', widget=forms.PasswordInput, required=False)
+    password_confirmation = forms.CharField(
+        label='Confirmar Nova Senha', widget=forms.PasswordInput, required=False)
 
     def clean(self):
         cleaned_data = super().clean()

@@ -85,7 +85,7 @@ WSGI_APPLICATION = 'resgatocao_dsw.wsgi.application'
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'resgatocao',
         'USER': 'root',
-        'PASSWORD': '%@M89YHqt^33',
+        'PASSWORD': '987410',
         'HOST': 'localhost',
         'PORT': '3306'
     }
@@ -119,8 +119,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
-
 
 
 # Internationalization

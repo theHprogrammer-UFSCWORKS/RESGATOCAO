@@ -30,19 +30,17 @@ class AnimalAdmin(admin.ModelAdmin):
                     'idade', 'sexo', 'peso', 'cor', 'cor_olho']
     search_fields = ['nome', 'raca__descricao']
     list_filter = ['adotado', 'raca', 'idade', 'sexo']
-    
+
     def get_queryset(self, request):
         qs = super(AnimalAdmin, self).get_queryset(request)
         if request.user.is_superuser:
             return qs
         return qs.filter(adotado=False)
-    
+
     def save_model(self, request, obj, form, change):
         if not change:
             obj.user = request.user
         obj.save()
-        
-    
 
 
 class FotoAnimalAdmin(admin.ModelAdmin):
