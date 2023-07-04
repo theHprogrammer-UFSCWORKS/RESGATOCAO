@@ -23,14 +23,14 @@ class Endereco(models.Model):
     endereco = models.CharField('Endereço', max_length=150)
     cidade = models.CharField('Cidade', max_length=150)
     numero = models.IntegerField('Número')
-    complemento = models.CharField('Complemento', max_length=100, blank=True, null=True)
+    complemento = models.CharField(
+        'Complemento', max_length=100, blank=True, null=True)
     is_principal = models.BooleanField('Principal', default=False)
 
     def __str__(self):
-        #return f'{self.numero}, {self.cidade} - {self.uf}'
-        #returning every information 
+        # return f'{self.numero}, {self.cidade} - {self.uf}'
+        # returning every information
         return f'{self.cep}, {self.uf}, {self.bairro}, {self.endereco}, {self.cidade}, {self.numero}, {self.complemento}, {self.is_principal}'
-
 
 
 class UserManager(BaseUserManager):

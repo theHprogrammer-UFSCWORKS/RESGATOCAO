@@ -39,23 +39,22 @@
 			type="text/css"
 			rel="stylesheet"
 			href="{% static 'core/assets/css/style404.css' %}" />
-			<style>
-				.dropdown-menu {
-				  min-width: 100px;
-				}
-				
-				.dropdown-item {
-				  padding: 0.5rem 1rem;
-				}
-				
-				.dropdown-item:hover {
-				  background-color: #f8f9fa;
-				}
-				#logout_button {
-   				 color: red; /* Change the color to your desired value */
-  				}
+		<style>
+			.dropdown-menu {
+				min-width: 100px;
+			}
 
-			  </style>
+			.dropdown-item {
+				padding: 0.5rem 1rem;
+			}
+
+			.dropdown-item:hover {
+				background-color: #f8f9fa;
+			}
+			#logout_button {
+				color: red; /* Change the color to your desired value */
+			}
+		</style>
 	</head>
 
 	<body>
@@ -101,7 +100,9 @@
 						</li>
 						<li class="nav-item"></li>
 						<li class="nav-item">
-							<a class="nav-link" href="{% url 'adocao:animal_list' %}"
+							<a
+								class="nav-link"
+								href="{% url 'adocao:animal_list' %}"
 								>Adocao</a
 							>
 						</li>
@@ -113,31 +114,87 @@
 						<li class="nav-item"></li>
 					</ul>
 					{% if user.is_authenticated %}
-					<div class="dropdown">
-						<a class="btn btn-primary shadow d-xl-flex ms-auto justify-content-xl-center align-items-xl-center" data-bs-toggle="dropdown" href="{% url 'core:index' %}">
-						  {% if user.avatar %}
-							<img src="{{ user.avatar.url }}" alt="Avatar" class="rounded-circle" width="30" height="30" />
-						  {% else %}
-							<div class="rounded-circle bg-primary text-white d-flex justify-content-center align-items-center" style="width: 30px; height: 30px">
-							  {{ user.first_name|first }}
-							</div>
-						  {% endif %}
-						  {{ user.first_name }}
-						</a>
-						<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-						  <li><a class="dropdown-item" href="{% url 'account:user_detail'%}">Informações</a></li>
-						  <li><a class="dropdown-item" href="{% url 'account:address_list'%}">Endereços</a></li>
-						  <li><a class="dropdown-item" href="#">Adoção</a></li>
-						  <li><a class="dropdown-item" id="logout_button" href="{% url 'account:logout' %}">Log Out</a></li>
-						</ul>
-					  </div>					  
+					<div class="d-flex align-items-center">
+						{% if user.avatar %}
+						<img
+							src="{{ user.avatar.url }}"
+							alt="Avatar"
+							class="rounded-circle"
+							width="40"
+							height="40" />
+						{% else %}
+						<div
+							class="rounded-circle bg-primary text-white d-flex justify-content-center align-items-center"
+							style="width: 40px; height: 40px">
+							{{ user.first_name|first }}
+						</div>
+						{% endif %}
+						<div class="dropdown">
+							<a
+								class="btn btn-primary shadow d-xl-flex ms-2 justify-content-xl-center align-items-xl-center"
+								data-bs-toggle="dropdown"
+								href="#">
+								{{ user.first_name }}<i
+									class="fa fa-angle-down"></i>
+							</a>
+							<ul
+								class="dropdown-menu"
+								aria-labelledby="dropdownMenuButton">
+								<li>
+									<a
+										class="dropdown-item"
+										href="{% url 'account:user_detail'%}"
+										>Informações</a
+									>
+								</li>
+								<li>
+									<a
+										class="dropdown-item"
+										href="{% url 'account:address_list'%}"
+										>Endereços</a
+									>
+								</li>
+								<li>
+									<a class="dropdown-item" href="#">Adoção</a>
+								</li>
+								<li>
+									<a
+										class="dropdown-item"
+										id="logout_button"
+										href="{% url 'account:logout' %}"
+										>Log Out</a
+									>
+								</li>
+							</ul>
+						</div>
+					</div>
 					{% else %}
-					<a
-						class="btn btn-primary shadow d-xl-flex ms-auto justify-content-xl-center align-items-xl-center"
-						data-bss-hover-animate="pulse"
-						href="{% url 'account:login' %}">
-						Canal do Adotante
-					</a>
+					<div class="dropdown">
+						<a
+							class="btn btn-primary shadow d-xl-flex ms-auto justify-content-xl-center align-items-xl-center"
+							data-bs-toggle="dropdown"
+							href="#">
+							Canal do Adotante <i class="fa fa-angle-down"></i>
+						</a>
+						<ul
+							class="dropdown-menu"
+							aria-labelledby="dropdownMenuButton">
+							<li>
+								<a
+									class="dropdown-item"
+									href="{% url 'account:login' %}"
+									>Login</a
+								>
+							</li>
+							<li>
+								<a
+									class="dropdown-item"
+									href="{% url 'account:signup' %}"
+									>Cadastre-se</a
+								>
+							</li>
+						</ul>
+					</div>
 					{% endif %}
 				</div>
 			</div>

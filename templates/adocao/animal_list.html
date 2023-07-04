@@ -19,11 +19,12 @@
 					data-bss-baguettebox="">
 					{% for animal in animals %}
 					<div class="col item">
-						<a href="{{ animal.avatar.url }}"
-							><img
+						<a href="{% url 'adocao:animal_detail' animal.id %}">
+							<img
 								class="img-fluid"
-								src="{{ animal.avatar.url }}"
-						/></a>
+								src="{{ animal.avatar.url }}" />
+						</a>
+
 						<div class="caption">{{ animal.nome }}</div>
 					</div>
 					{% endfor %}
