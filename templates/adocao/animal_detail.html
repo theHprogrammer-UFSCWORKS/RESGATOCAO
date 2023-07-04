@@ -28,6 +28,16 @@
                         {{ caracteristica }}{% if not forloop.last %}, {% endif %}
                     {% endfor %}
                 </p>
+                <!-- Botão de requisição de adoção -->
+                {% if user.is_authenticated %}
+                    {% if has_principal_address %}
+                    <a href="{% url 'adocao:adocao_create' animal.pk %}" class="btn btn-primary float-end">Requisição de Adoção</a>
+                    {% else %}
+                        <a href="{% url 'account:address_list' %}" class="btn btn-primary float-end">Requisição de Adoção</a>
+                    {% endif %}
+                {% else %}
+                    <a href="{% url 'account:login' %}" class="btn btn-primary float-end">Requisição de Adoção</a>
+                {% endif %}
             </div>
         </div>
     </div>

@@ -1,0 +1,11 @@
+<!-- adocao/adocao_detail.html -->
+{% extends 'core/base.html' %}
+
+{% block content %}
+<h2>Detalhes da Adoção</h2>
+<p>Animal: {{ adocao.animal.nome }}</p>
+<p>Adotante: {{ adocao.adotante.first_name }} {{ adocao.adotante.last_name }}</p>
+<p>Data de Requisição: {{ adocao.data_inicio }}</p>
+<p>Data de Conclusão: {{ adocao.data_adocao|date:"d/m/Y"|default:"Em processo" }}</p>
+<p>Etapa da adoção: {{ adocao.get_etapa_display }}</p>
+{% endblock %}
