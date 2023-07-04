@@ -80,13 +80,24 @@ WSGI_APPLICATION = 'resgatocao_dsw.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
+'''DATABASES = {
     "default": {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'resgatocao',
         'USER': 'root',
         'PASSWORD': '%@M89YHqt^33',
         'HOST': 'localhost',
+        'PORT': '3306'
+    }
+}'''
+
+DATABASES = {
+    "default": {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'luccams$resgatocao',
+        'USER': 'luccams',
+        'PASSWORD': 'At6&rd2m8^lz',
+        'HOST': 'luccams.mysql.pythonanywhere-services.com',
         'PORT': '3306'
     }
 }
