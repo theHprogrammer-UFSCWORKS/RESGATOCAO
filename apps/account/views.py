@@ -22,7 +22,6 @@ class EmailLoginView(LoginView):
     form_class = EmailAuthenticationForm  # use your custom form
 
     def form_valid(self, form):
-        # use 'username' here, not 'email'
         email = form.cleaned_data.get('username')
         password = form.cleaned_data.get('password')
 
