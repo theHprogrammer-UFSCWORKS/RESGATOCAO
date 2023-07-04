@@ -91,13 +91,23 @@ WSGI_APPLICATION = 'resgatocao_dsw.wsgi.application'
     }
 }'''
 
-DATABASES = {
+'''DATABASES = {
     "default": {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'luccams$resgatocao',
         'USER': 'luccams',
         'PASSWORD': 'At6&rd2m8^lz',
         'HOST': 'luccams.mysql.pythonanywhere-services.com',
+        'PORT': '3306'
+    }
+}'''
+DATABASES = {
+    "default": {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'saintangel$default',
+        'USER': 'saintangel',
+        'PASSWORD': 'At6&rd2m8^lz',
+        'HOST': 'saintangel.mysql.pythonanywhere-services.com',
         'PORT': '3306'
     }
 }
