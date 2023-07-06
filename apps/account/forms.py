@@ -104,7 +104,6 @@ class CustomUserUpdateForm(forms.ModelForm):
 
     class Meta:
         model = User
-        # fields = ["username", "first_name", "last_name", "email", "birth_date", "occupation", "cpf", "phone"]
         fields = ["username", "first_name", "last_name",
                   "birth_date", "occupation", "cpf", "phone"]
 
@@ -112,6 +111,18 @@ class CustomUserUpdateForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields["birth_date"].disabled = True
         self.fields["cpf"].disabled = True
+    
+    def clean_phone(self):
+        phone = self.cleaned_data.get('phone')
+
+        # Remove todos os caracteres não numéricos
+        phone = re.sub(r'\D', '', phone)
+
+        # Adicione aqui a sua lógica de validação do telefone
+        if not re.match(r'^\d{10,13}$', phone):
+            raise ValidationError('Telefone inválido. Deve ter entre 10 e 13 dígitos.')
+
+        return phone
 
 
 class AvatarUploadForm(forms.ModelForm):
