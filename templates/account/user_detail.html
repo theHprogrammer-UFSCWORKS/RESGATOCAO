@@ -1,24 +1,22 @@
 {% extends 'core/base.html' %}
 
+{% load format %}  <!-- Carregue os filtros de template -->
+
 {% block title %}Detalhes do Usuário - Resgatocao{% endblock %}
 
 {% block content %}
   <style>
-    .user-details {
-      margin: 20px auto;
+    .user-profile {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      max-width: 600px;
+      margin: 0 auto;
       padding: 20px;
       border: 1px solid #ccc;
       border-radius: 5px;
       background-color: #f5f5f5;
-      text-align: center;
-    }
-
-    .user-details p {
-      margin: 10px 0;
-    }
-
-    .user-details strong {
-      font-weight: bold;
     }
 
     .avatar {
@@ -26,52 +24,67 @@
       height: 150px;
       border-radius: 50%;
       object-fit: cover;
-      display: block;
-      margin: 0 auto 10px;
+    }
+
+    .user-info {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+    }
+
+    .user-info p {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      font-size: 1.1em;
+    }
+
+    .user-info p span:first-child {
+      font-weight: bold;
     }
 
     .update-buttons {
       display: flex;
-      justify-content: center;
-      margin-top: 20px;
+      justify-content: space-between;
+      width: 100%;
     }
 
     .update-buttons a {
-      display: inline-block;
-      background-color: #4CAF50;
-      color: white;
       padding: 10px 20px;
-      border: none;
+      color: white;
+      background-color: #007bff;
       border-radius: 4px;
-      cursor: pointer;
       text-decoration: none;
-      margin-right: 10px;
+      text-align: center;
     }
 
     .update-buttons a:hover {
-      background-color: #45a049;
+      background-color: #0056b3;
     }
   </style>
 
   <h1 class="text-center">Informações do Usuário</h1>
-  <div class="user-details">
+  <div class="user-profile">
     {% if user.avatar %}
       <img class="avatar" src="{{ user.avatar.url }}" alt="Avatar">
     {% else %}
-      <p><strong>Avatar:</strong> Usuário sem Avatar</p>
+      <p>Usuário sem Avatar</p>
     {% endif %}
-    <p><strong>Nome de Usuário:</strong> {{ user.username }}</p>
-    <p><strong>Nome Completo:</strong> {{ user.get_full_name }}</p>
-    <p><strong>Email:</strong> {{ user.email }}</p>
-    <p><strong>Data de Nascimento:</strong> {{ user.birth_date }}</p>
-    <p><strong>Ocupação:</strong> {{ user.occupation }}</p>
-    <p><strong>CPF:</strong> {{ user.cpf }}</p>
-    <p><strong>Telefone:</strong> {{ user.phone }}</p>
-    <!-- Add more user information fields if needed -->
-  </div>
-
-  <div class="update-buttons">
-    <a href="{% url 'account:user_update' %}">Atualizar Informações Gerais</a>
-    <a href="{% url 'account:email_password_update' %}">Atualizar Informações de Login</a>
+    <div class="user-info">
+      <p><span>Nome de Usuário:</span> <span>{{ user.username }}</span></p>
+      <p><span>Nome Completo:</span> <span>{{ user.get_full_name }}</span></p>
+      <p><span>Email:</span> <span>{{ user.email }}</span></p>
+      <p><span>Data de Nascimento:</span> <span>{{ user.birth_date }}</span></p>
+      <p><span>Ocupação:</span> <span>{{ user.occupation }}</span></p>
+      <p><span>CPF:</span> <span>{{ user.cpf|format_cpf }}</span></p>
+      <p><span>Telefone:</span> <span>{{ user.phone|format_phone }}</span></p>
+      <!-- Add more user information fields if needed -->
+    </div>
+    <div class="update-buttons">
+      <a href="{% url 'account:user_update' %}">Atualizar Informações Gerais</a>
+      <a href="{% url 'account:email_password_update' %}">Atualizar Informações de Login</a>
+    </div>
   </div>
 {% endblock %}

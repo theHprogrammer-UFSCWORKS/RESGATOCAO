@@ -7,6 +7,7 @@
 			name="viewport"
 			content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
 		<title>{% block title %}Home - Resgatocao{% endblock %}</title>
+
 		<link
 			rel="stylesheet"
 			href="{% static 'core/assets/bootstrap/css/bootstrap.min.css' %}" />
@@ -28,6 +29,7 @@
 			href="https://fonts.googleapis.com/css?family=Kanit:200"
 			rel="stylesheet" />
 
+
 		<!-- Font Awesome Icon -->
 		<link
 			type="text/css"
@@ -39,13 +41,19 @@
 			type="text/css"
 			rel="stylesheet"
 			href="{% static 'core/assets/css/style404.css' %}" />
+
+		<link rel="stylesheet" href="{% static 'core/assets/css/main.css' %}" />
+
+
 		<style>
 			.dropdown-menu {
-				min-width: 100px;
+				min-width: 200px;
+				padding: 0.5rem 1rem;
 			}
 
 			.dropdown-item {
 				padding: 0.5rem 1rem;
+				margin: 0.25rem 0;
 			}
 
 			.dropdown-item:hover {
@@ -94,7 +102,7 @@
 							>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="sobre.html"
+							<a class="nav-link" href="{% url 'core:about'%}"
 								>Sobre a ONG</a
 							>
 						</li>
@@ -108,7 +116,7 @@
 						</li>
 						<li class="nav-item"></li>
 						<li class="nav-item">
-							<a class="nav-link" href="contato.html">Contato</a>
+							<a class="nav-link" href="{% url 'core:contato'%}">Contato</a>
 						</li>
 						<li class="nav-item"></li>
 						<li class="nav-item"></li>
@@ -155,9 +163,11 @@
 									>
 								</li>
 								<li>
-									<a class="dropdown-item"
-									href="{% url 'adocao:adocao_list'%}"
-									>Adoção</a>
+									<a
+										class="dropdown-item"
+										href="{% url 'adocao:adocao_list'%}"
+										>Adoção</a
+									>
 								</li>
 								<li>
 									<a
@@ -297,8 +307,71 @@
 			</div>
 		</footer>
 
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+		<script>
+			$(document).ready(function() {
+				// Aplicar máscaras
+				$("input[name='cpf']").mask('000.000.000-00', {reverse: true});
+				$("input[name='phone']").mask('(00) 00000-0000');
+			
+				// Validar formulário
+				$("form").validate({
+					rules: {
+						username: "required",
+						first_name: "required",
+						last_name: "required",
+						email: {
+							required: true,
+							email: true
+						},
+						birth_date: "required",
+						occupation: "required",
+						cpf: "required",
+						phone: "required",
+						password1: {
+							required: true,
+							minlength: 5
+						},
+						password2: {
+							required: true,
+							minlength: 5,
+							equalTo: "input[name='password1']"
+						}
+					},
+					messages: {
+						username: "Por favor, insira seu nome de usuário",
+						first_name: "Por favor, insira seu nome",
+						last_name: "Por favor, insira seu sobrenome",
+						email: {
+							required: "Por favor, insira seu email",
+							email: "Por favor, insira um email válido"
+						},
+						birth_date: "Por favor, insira sua data de nascimento",
+						occupation: "Por favor, insira sua ocupação",
+						cpf: "Por favor, insira seu CPF",
+						phone: "Por favor, insira seu telefone",
+						password1: {
+							required: "Por favor, insira sua senha",
+							minlength: "Sua senha deve ter pelo menos 5 caracteres"
+						},
+						password2: {
+							required: "Por favor, confirme sua senha",
+							minlength: "Sua senha deve ter pelo menos 5 caracteres",
+							equalTo: "As senhas não coincidem"
+						}
+					}
+				});
+			});
+		</script>	
 		<script src="{% static 'core/assets/bootstrap/js/bootstrap.min.js' %}"></script>
 		<script src="{% static 'core/assets/js/bs-init.js' %}"></script>
 		<script src="{% static 'core/assets/js/bold-and-bright.js' %}"></script>
+		<script src="{% static 'core/assets/js/progress-bar.js' %}"></script>
+		<script type="text/javascript">
+		var currentStage = "{{ adocao.get_etapa_display }}";
+		</script>
+		<script src="{% static 'core/assets/js/app.js' %}"></script>
 	</body>
 </html>

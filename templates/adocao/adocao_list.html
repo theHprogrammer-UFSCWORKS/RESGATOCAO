@@ -2,16 +2,25 @@
 {% extends 'core/base.html' %}
 
 {% block content %}
-<h2>Adoções</h2>
-<ul>
-{% for adocao in adocoes %}
-    <li>
-        <a href="{% url 'adocao:adocao_detail' adocao.id %}">
-            {{ adocao.animal.nome }} - {{ adocao.adotante.first_name }} {{ adocao.adotante.last_name }}
-        </a>
-    </li>
-{% empty %}
-    <li>Nenhuma adoção encontrada.</li>
-{% endfor %}
-</ul>
+<div class="container">
+    <h2 class="my-4">Adoções</h2>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for adocao in adocoes %}
+            <div class="col">
+                <div class="card h-100">
+                    <img src="{{ adocao.animal.avatar.url }}" class="card-img-top mb-3" alt="{{ adocao.animal.nome }}">
+                    <div class="card-body">
+                        <h5 class="card-title mb-3">{{ adocao.animal.nome }}</h5>
+                        <p class="card-text mb-3">Adotante: {{ adocao.adotante.first_name }} {{ adocao.adotante.last_name }}</p>
+                        <a href="{% url 'adocao:adocao_detail' adocao.id %}" class="btn btn-primary">Ver detalhes</a>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="col">
+                <p>Nenhuma adoção encontrada.</p>
+            </div>
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}

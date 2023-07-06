@@ -1,7 +1,10 @@
+import re
+
 from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import (AuthenticationForm, PasswordChangeForm,
                                        UserChangeForm, UserCreationForm)
+from django.core.exceptions import ValidationError
 
 
 class EmailAuthenticationForm(AuthenticationForm):
@@ -15,13 +18,72 @@ class CustomUserCreationForm(UserCreationForm):
     email = forms.EmailField(required=True)
     birth_date = forms.DateField(required=True)
     occupation = forms.CharField(max_length=150, required=True)
-    cpf = forms.CharField(max_length=11, required=True)
-    phone = forms.CharField(max_length=13, required=True)
+    cpf = forms.CharField(required=True)
+    phone = forms.CharField(required=True)
 
     class Meta:
         model = User
         fields = ("username", "first_name", "last_name", "email", "birth_date", "occupation",
                   "cpf", "phone", "password1", "password2")
+
+    def clean_cpf(self):
+        cpf = self.cleaned_data.get('cpf')
+
+        # Remove todos os caracteres não numéricos
+        cpf = re.sub(r'\D', '', cpf)
+
+        if len(cpf) != 11:
+            raise ValidationError('CPF deve ter 11 dígitos.')
+
+        cpf = list(map(int, cpf))
+
+        novo_cpf = cpf[:9]
+
+        while len(novo_cpf) < 11:
+            r = sum([(len(novo_cpf)+1-i)*v for i,v in enumerate(novo_cpf)]) % 11
+
+            if r > 1:
+                f = 11 - r
+            else:
+                f = 0
+            novo_cpf.append(f)
+
+        if novo_cpf == cpf:
+            return ''.join(map(str, cpf))  # Converta a lista de volta para uma string
+        else:
+            raise ValidationError('CPF inválido.')
+
+
+    def clean_phone(self):
+        phone = self.cleaned_data.get('phone')
+
+        # Remove todos os caracteres não numéricos
+        phone = re.sub(r'\D', '', phone)
+
+        # Adicione aqui a sua lógica de validação do telefone
+        if not re.match(r'^\d{10,13}$', phone):
+            raise ValidationError('Telefone inválido. Deve ter entre 10 e 13 dígitos.')
+
+        return phone
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+
+        # Verifica se o e-mail já está sendo usado por outro usuário
+        if User.objects.filter(email=email).exists():
+            raise ValidationError('Este e-mail já está sendo usado.')
+
+        return email
+
+    def clean(self):
+        cleaned_data = super().clean()
+        password1 = cleaned_data.get('password1')
+        password2 = cleaned_data.get('password2')
+
+        if password1 and password2 and password1 != password2:
+            self.add_error('password2', 'As senhas não coincidem.')
+
+        return cleaned_data
 
     def save(self, commit=True):
         user = super().save(commit=False)
