@@ -1,6 +1,5 @@
-{% extends 'core/base.html' %} {% block title %} Cadastro - Resgatocao {%endblock%}
-
-{% block content %}
+{% extends 'core/base.html' %} {% block title %} Cadastro - Resgatocao
+{%endblock%} {% block content %}
 <section class="py-5">
 	<div class="container py-5">
 		<div class="row mb-4 mb-lg-5">
@@ -119,4 +118,64 @@
 		</div>
 	</div>
 </section>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+<script>
+	$(document).ready(function () {
+		// Aplicar máscaras
+		$("input[name='cpf']").mask("000.000.000-00", { reverse: true });
+		$("input[name='phone']").mask("(00) 00000-0000");
+
+		// Validar formulário
+		$("form").validate({
+			rules: {
+				username: "required",
+				first_name: "required",
+				last_name: "required",
+				email: {
+					required: true,
+					email: true,
+				},
+				birth_date: "required",
+				occupation: "required",
+				cpf: "required",
+				phone: "required",
+				password1: {
+					required: true,
+					minlength: 5,
+				},
+				password2: {
+					required: true,
+					minlength: 5,
+					equalTo: "input[name='password1']",
+				},
+			},
+			messages: {
+				username: "Por favor, insira seu nome de usuário",
+				first_name: "Por favor, insira seu nome",
+				last_name: "Por favor, insira seu sobrenome",
+				email: {
+					required: "Por favor, insira seu email",
+					email: "Por favor, insira um email válido",
+				},
+				birth_date: "Por favor, insira sua data de nascimento",
+				occupation: "Por favor, insira sua ocupação",
+				cpf: "Por favor, insira seu CPF",
+				phone: "Por favor, insira seu telefone",
+				password1: {
+					required: "Por favor, insira sua senha",
+					minlength: "Sua senha deve ter pelo menos 5 caracteres",
+				},
+				password2: {
+					required: "Por favor, confirme sua senha",
+					minlength: "Sua senha deve ter pelo menos 5 caracteres",
+					equalTo: "As senhas não coincidem",
+				},
+			},
+		});
+	});
+</script>
+
 {% endblock %}

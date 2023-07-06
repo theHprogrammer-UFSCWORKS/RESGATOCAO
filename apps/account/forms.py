@@ -40,7 +40,8 @@ class CustomUserCreationForm(UserCreationForm):
         novo_cpf = cpf[:9]
 
         while len(novo_cpf) < 11:
-            r = sum([(len(novo_cpf)+1-i)*v for i,v in enumerate(novo_cpf)]) % 11
+            r = sum([(len(novo_cpf)+1-i)*v for i,
+                    v in enumerate(novo_cpf)]) % 11
 
             if r > 1:
                 f = 11 - r
@@ -49,10 +50,10 @@ class CustomUserCreationForm(UserCreationForm):
             novo_cpf.append(f)
 
         if novo_cpf == cpf:
-            return ''.join(map(str, cpf))  # Converta a lista de volta para uma string
+            # Converta a lista de volta para uma string
+            return ''.join(map(str, cpf))
         else:
             raise ValidationError('CPF inválido.')
-
 
     def clean_phone(self):
         phone = self.cleaned_data.get('phone')
@@ -62,7 +63,8 @@ class CustomUserCreationForm(UserCreationForm):
 
         # Adicione aqui a sua lógica de validação do telefone
         if not re.match(r'^\d{10,13}$', phone):
-            raise ValidationError('Telefone inválido. Deve ter entre 10 e 13 dígitos.')
+            raise ValidationError(
+                'Telefone inválido. Deve ter entre 10 e 13 dígitos.')
 
         return phone
 
@@ -104,7 +106,6 @@ class CustomUserUpdateForm(forms.ModelForm):
 
     class Meta:
         model = User
-        # fields = ["username", "first_name", "last_name", "email", "birth_date", "occupation", "cpf", "phone"]
         fields = ["username", "first_name", "last_name",
                   "birth_date", "occupation", "cpf", "phone"]
 
