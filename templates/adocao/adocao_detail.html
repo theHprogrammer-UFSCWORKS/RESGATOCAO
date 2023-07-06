@@ -1,11 +1,42 @@
-<!-- adocao/adocao_detail.html -->
-{% extends 'core/base.html' %}
+{% extends 'core/base.html' %} 
 
 {% block content %}
-<h2>Detalhes da Adoção</h2>
-<p>Animal: {{ adocao.animal.nome }}</p>
-<p>Adotante: {{ adocao.adotante.first_name }} {{ adocao.adotante.last_name }}</p>
-<p>Data de Requisição: {{ adocao.data_inicio }}</p>
-<p>Data de Conclusão: {{ adocao.data_adocao|date:"d/m/Y"|default:"Em processo" }}</p>
-<p>Etapa da adoção: {{ adocao.get_etapa_display }}</p>
+<div class="container my-5">
+	<div class="text-center">
+		<h2 class="mb-4">
+			Requisição de Adoção do Pet "{{ adocao.animal.nome }}"
+		</h2>
+	</div>
+	<div class="my-namespace" style="margin: 7rem">
+		<div class="progress-bar-wrapper"></div>
+	</div>
+	<div class="mt-5 px-3">
+		<h3 class="text-center">Detalhes da Adoção</h3>
+		<div class="row justify-content-center">
+			<div class="col-md-4 text-center">
+				<p><strong>Animal:</strong> {{ adocao.animal.nome }}</p>
+				<p><strong>Data de Requisição:</strong> {{ adocao.data_inicio|date:"d/m/Y" }}</p>
+			</div>
+			<div class="col-md-4 text-center">
+				<p><strong>Adotante:</strong> {{ adocao.adotante.first_name }} {{adocao.adotante.last_name }}</p>
+				<p><strong>Data de Conclusão:</strong> {{ adocao.data_adocao|date:"d/m/Y"|default:"Em processo" }}</p>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12 text-center">
+				<p><strong>Etapa da adoção:</strong> {{ adocao.get_etapa_display }}</p>
+			</div>
+		</div>
+		<div class="row mt-4">
+			<div class="col-md-12 text-center">
+				<h4>Observações</h4>
+				{% if adocao.observacoes %}
+					<p>{{ adocao.observacoes }}</p>
+				{% else %}
+					<p>Não há observações.</p>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+</div>
 {% endblock %}

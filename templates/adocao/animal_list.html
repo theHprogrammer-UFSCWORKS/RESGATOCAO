@@ -25,7 +25,7 @@
 								src="{{ animal.avatar.url }}" />
 						</a>
 
-						<div class="caption">{{ animal.nome }}</div>
+						<div class="caption">{{ animal.nome }}{% if animal.adotado %} - Adotado{% endif %}</div>
 					</div>
 					{% endfor %}
 				</div>

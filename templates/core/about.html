@@ -1,0 +1,47 @@
+{% extends 'core/base.html' %}
+
+{% load static %}
+
+{% block title %} Sobre - Resgatocao {% endblock %}
+
+{% block content %}
+
+    <section class="py-5">
+        <div class="container py-5">
+            <div class="row mb-4 mb-lg-5">
+                <div class="col-md-8 col-xl-6 text-center mx-auto">
+                    <p class="fw-bold text-success mb-2">Sobre Nós</p>
+                    <h3 class="fw-bold">Nossa Missão e História</h3>
+                </div>
+            </div>
+            <div class="row row-cols-1 row-cols-md-2 mx-auto" style="max-width: 900px;">
+                <div class="col mb-5"><img class="rounded img-fluid shadow" src="{% static 'core/assets/img/products/1.jpg' %}"></div>
+                <div class="col d-md-flex align-items-md-end align-items-lg-center mb-5">
+                    <div>
+                        <h5 class="fw-bold">Nossa Missão</h5>
+                        <p class="text-muted mb-4">A Resgatocao tem como missão resgatar, cuidar e encontrar lares amorosos para cães e gatos abandonados. Acreditamos que todos os animais merecem uma segunda chance para uma vida cheia de amor e carinho.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row row-cols-1 row-cols-md-2 mx-auto" style="max-width: 900px;">
+                <div class="col order-md-last mb-5"><img class="rounded img-fluid shadow" src="{% static 'core/assets/img/products/2.jpg' %}"></div>
+                <div class="col d-md-flex align-items-md-end align-items-lg-center mb-5">
+                    <div>
+                        <h5 class="fw-bold">Nossa História</h5>
+                        <p class="text-muted mb-4">Fundada em 2023, a Resgatocao começou como um pequeno grupo de voluntários dedicados a ajudar cães e gatos em situação de rua. Desde então, crescemos e já ajudamos mais de 1000 pets a encontrar lares amorosos.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row row-cols-1 row-cols-md-2 mx-auto" style="max-width: 900px;">
+                <div class="col mb-5"><img class="rounded img-fluid shadow" src="{% static 'core/assets/img/products/3.jpg' %}"></div>
+                <div class="col d-md-flex align-items-md-end align-items-lg-center mb-5">
+                    <div>
+                        <h5 class="fw-bold">Como Ajudar</h5>
+                        <p class="text-muted mb-4">Existem muitas maneiras de ajudar a Resgatocao. Você pode adotar, se tornar um voluntário, doar ou até mesmo apadrinhar um amiguinho. Junte-se a nós na missão de dar a cada cão a vida que eles merecem.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

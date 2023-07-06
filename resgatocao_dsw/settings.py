@@ -83,7 +83,7 @@ WSGI_APPLICATION = 'resgatocao_dsw.wsgi.application'
 DATABASES = {
     "default": {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'saintangel$resgatocao_dsw',
+        'NAME': 'saintangel$resgatocao_dsw_deploy',
         'USER': 'saintangel',
         'PASSWORD': 'At6&rd2m8^lz',
         'HOST': 'saintangel.mysql.pythonanywhere-services.com',

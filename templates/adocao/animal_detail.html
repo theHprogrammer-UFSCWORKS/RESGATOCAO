@@ -6,18 +6,24 @@
 <section class="py-5">
     <div class="container py-5">
         <div class="row">
-            <div class="col-md-6">
-                <img src="{{ animal.avatar.url }}" alt="{{ animal.nome }}" class="img-fluid">
+            <div class="col-md-6 d-flex flex-column align-items-center">
+                <img src="{{ animal.avatar.url }}" alt="{{ animal.nome }}" class="img-fluid rounded-circle" style="width: 300px; height: 300px; object-fit: cover;">
+                <p class="mt-4"><strong>Sobre:</strong> {{ animal.sobre }}</p>
             </div>
             <div class="col-md-6">
                 <h2>{{ animal.nome }}</h2>
-                <p><strong>Raça:</strong> {{ animal.raca }}</p>
-                <p><strong>Idade:</strong> {{ animal.idade }}</p>
-                <p><strong>Sexo:</strong> {{ animal.sexo }}</p>
-                <p><strong>Peso:</strong> {{ animal.peso }} kg</p>
-                <p><strong>Cor:</strong> {{ animal.cor }}</p>
-                <p><strong>Cor do olho:</strong> {{ animal.cor_olho }}</p>
-                <p><strong>Sobre:</strong> {{ animal.sobre }}</p>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p><strong>Raça:</strong> {{ animal.raca }}</p>
+                        <p><strong>Idade:</strong> {{ animal.idade }}</p>
+                        <p><strong>Sexo:</strong> {{ animal.sexo }}</p>
+                        <p><strong>Peso:</strong> {{ animal.peso }} kg</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p><strong>Cor:</strong> {{ animal.cor }}</p>
+                        <p><strong>Cor do olho:</strong> {{ animal.cor_olho }}</p>
+                    </div>
+                </div>
                 <p><strong>Comandos:</strong> 
                     {% for comando in animal.comandos.all %} 
                         {{ comando }}{% if not forloop.last %}, {% endif %}
@@ -29,16 +35,33 @@
                     {% endfor %}
                 </p>
                 <!-- Botão de requisição de adoção -->
-                {% if user.is_authenticated %}
-                    {% if has_principal_address %}
-                    <a href="{% url 'adocao:adocao_create' animal.pk %}" class="btn btn-primary float-end">Requisição de Adoção</a>
+                {% if animal.adotado %}
+                    <p class="text-warning">Este animal já foi adotado.</p>
+                {% else %}
+                    {% if user.is_authenticated %}
+                        {% if user_has_requested and not adocao_rejeitada %}
+                            <p class="text-warning">Sua requisição de adoção para esse animal já está em processo.</p>
+                        {% elif adocao_em_andamento %}
+                            <p class="text-warning">Este animal está indisponível para requisição de adoção no momento.</p>
                     {% else %}
-                        <a href="{% url 'account:address_list' %}" class="btn btn-primary float-end">Requisição de Adoção</a>
+                        {% if has_principal_address %}
+                            <a href="{% url 'adocao:adocao_create' animal.pk %}" class="btn btn-primary float-end">Requisição de Adoção</a>
+                        {% else %}
+                            <a href="{% url 'account:address_list' %}" class="btn btn-primary float-end">Requisição de Adoção</a>
+                        {% endif %}
                     {% endif %}
                 {% else %}
-                    <a href="{% url 'account:login' %}" class="btn btn-primary float-end">Requisição de Adoção</a>
+                <a href="{% url 'account:login' %}" class="btn btn-primary float-end">Requisição de Adoção</a>
+                {% endif %}
                 {% endif %}
             </div>
+        </div>
+        <div class="row mt-5">
+            {% for foto in animal.fotoanimal_set.all %}
+                <div class="col-md-4">
+                    <img src="{{ foto.foto.url }}" alt="{{ animal.nome }}" class="img-fluid rounded mb-4">
+                </div>
+            {% endfor %}
         </div>
     </div>
 </section>
